@@ -17,13 +17,14 @@ class SwitchGUI(tk.Frame):
 
         #Open the settings file so name changes can be permanently saved
         try:
-            self.settings_file = open("config.txt", "r+");
+            self.settings_file = open("./config.txt", "r+");
             if(stat("config.txt").st_size != 0):
                 self.settings_set = True;
             else:
                 self.settings_set = False;
         except IOError:
-            self.settings_file = open("config.txt", "r+");
+            self.settings_file = open("./config.txt", "a+");
+            self.settings_file.seek(0);
             self.settings_set = False;
         
         #Create widgets
@@ -213,8 +214,8 @@ def testConnection():
         return True;
     except TimeoutError:
         print("Connection could not be established. Ensure everything is plugged in and try again");
+        input("Press Enter to continue . . . ");
         return False;
-
 
 #Instantiate GUI if switch is connected    
 if(testConnection()):
