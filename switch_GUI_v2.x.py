@@ -17,25 +17,17 @@ class SwitchGUI(tk.Frame):
         #Open the settings file so name changes can be permanently saved
         try:
             self.settings_file = open("./config.txt", "r+");
-            if(stat("config.txt").st_size != 0):
-                self.settings_set = True;
-            else:
-                self.settings_set = False;
         except IOError:
             self.settings_file = open("./config.txt", "w+");
-            self.settings_file.seek(0);
-            self.settings_set = False;
         
         #Create widgets
           #label creation gets its own function for creation and packing so that it can be called again whenever names are changed. Other widgets are static, so no function
-        self.portNumbers = [];
-        self.makeLabels();
-          #the checkboxes to turn ports on and off
-        self.checkVar = [];
-        self.portCheckBoxes = [];
+        self.buttonVar = [];
         for i in range(numPorts):
-            self.checkVar.append(tk.IntVar());      
-            self.portCheckBoxes.append(tk.Checkbutton(master, text = "Active?", variable=self.checkVar[i], command = partial(self.portInteract, self.checkVar[i], i)));
+            self.buttonVar.append(1);
+        self.portNumbers = [];
+        self.makeButtons();
+          #the checkboxes to turn ports on and off
 
           #activate and deativate all buttons, as well as an exit button and a button to change the names assigned to the ports
         activateAllButton = tk.Button(master, text = "Activate all ports", command = lambda: self.activateAllPorts(self.portCheckBoxes));
@@ -46,14 +38,12 @@ class SwitchGUI(tk.Frame):
         #Place widgets into GUI
         activateAllButton.grid(column = 0, row = 0, sticky = "w" + "e");
         deactivateAllButton.grid(column = 1, row = 0, sticky = "w" + "e");
-        for i in range(numPorts):
-            self.portCheckBoxes[i].grid(column = 1, row = i + 1);
         exitButton.grid(row = numPorts + 2, sticky = "w" + "e");
         settingsButton.grid(column = 1, row = numPorts + 2, sticky = "w" + "e");
         
     #Define functions
       #make the labels for the GUI, then call the packing function
-    def makeLabels(self):
+    def makeButtons(self):
         #if the labels have already been made, they need to be destroyed, otherwise the new labels will just be placed on top of the old ones
         if(len(self.portNumbers) != 0):
             for i in range(numPorts):
@@ -70,7 +60,7 @@ class SwitchGUI(tk.Frame):
                 var = tk.StringVar();
                 var.set(self.settings_file.readline().rstrip());
                 self.labelVars.append(var);
-                self.portNumbers.append(tk.Label(self.master, textvariable = self.labelVars[i]));
+                self.portNumbers.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
         else:
             for i in range(numPorts):
                 var = tk.StringVar();
@@ -102,33 +92,37 @@ class SwitchGUI(tk.Frame):
             box.invoke();
         return;
       #determine which port a clicked box corresponds to, and whether to turn it on or off
-    def portInteract(self, checkVar, i):
-        if(checkVar.get()):
-            self.turnPortOn(i + 1);
+    def portInteract(self, i):
+        if(self.buttonVar[i]):
+            self.turnPortOn(i);
+            self.buttonVar[i] = 0;
         else:
-            self.turnPortOff(i + 1);
+            self.turnPortOff(i);
+            self.buttonVar[i] = 1;
         return;
       #turn on a port
     def turnPortOn(self, portNum):
         switchConnect = http.client.HTTPConnection("10.10.1.229");
         if(portNum < 6):
-            urlExtension = "/8080/0" + str(portNum * 2 - 1);
+            urlExtension = "/8080/0" + str(portNum * 2 + 1);
         else:
-            urlExtension = "/8080/" + str(portNum * 2 - 1);
+            urlExtension = "/8080/" + str(portNum * 2 + 1);
         switchConnect.request("GET", urlExtension);
         switchConnect.getresponse();
         switchConnect.close();
+        self.portNumbers[portNum].config(bg = "lime green");
         return;
       #turn off a port
     def turnPortOff(self, portNum):
         switchConnect = http.client.HTTPConnection("10.10.1.229");
         if(portNum < 6):
-            urlExtension = "/8080/0" + str(portNum * 2 - 2);
+            urlExtension = "/8080/0" + str(portNum * 2);
         else:
-            urlExtension = "/8080/" + str(portNum * 2 - 2);
+            urlExtension = "/8080/" + str(portNum * 2);
         switchConnect.request("GET", urlExtension);
         switchConnect.getresponse();
         switchConnect.close();
+        self.portNumbers[portNum].config(bg = "SystemButtonFace");
         return;
       #close the settings file and exit the GUI
     def exit(self):
@@ -186,7 +180,7 @@ class settings(tk.Frame):
         #write the new labels to it
         for i in range(numPorts):
             settings_file.write(newLabels[i] + "\n");
-        GUI.makeLabels();
+        GUI.makeButtons();
         self.makeSettingsLabels();
         return;
       #rewrites the config file with default names
@@ -195,7 +189,7 @@ class settings(tk.Frame):
         settings_file.seek(0);
         for i in range(numPorts):
             settings_file.write("Port " + str(i + 1) + "\n");
-        GUI.makeLabels();
+        GUI.makeButtons();
         self.makeSettingsLabels();
         return;
       #remakes and packs the port labels so they update in the settings window
