@@ -23,7 +23,7 @@ class SwitchGUI(tk.Frame):
             else:
                 self.settings_set = False;
         except IOError:
-            self.settings_file = open("./config.txt", "a+");
+            self.settings_file = open("./config.txt", "w+");
             self.settings_file.seek(0);
             self.settings_set = False;
         
@@ -55,13 +55,18 @@ class SwitchGUI(tk.Frame):
     #Define functions
       #make the labels for the GUI, then call the packing function
     def makeLabels(self):
+        #if the labels have already been made, they need to be destroyed, otherwise the new labels will just be placed on top of the old ones
         if(len(self.portNumbers) != 0):
             for i in range(numPorts):
                 GUI.portNumbers[i].destroy();
         self.labelVars = [];
         self.portNumbers = [];
         self.settings_file.seek(0);
-        if(self.settings_set):
+        i = 0;
+        for line in self.settings_file:
+            i += 1;
+        self.settings_file.seek(0);
+        if(i == numPorts):
             for i in range(numPorts):
                 var = tk.StringVar();
                 var.set(self.settings_file.readline().rstrip());
