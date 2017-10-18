@@ -30,8 +30,8 @@ class SwitchGUI(tk.Frame):
           #the checkboxes to turn ports on and off
 
           #activate and deativate all buttons, as well as an exit button and a button to change the names assigned to the ports
-        activateAllButton = tk.Button(master, text = "Activate all ports", command = lambda: self.activateAllPorts(self.portCheckBoxes));
-        deactivateAllButton = tk.Button(master, text = "Deactivate all ports", command = lambda: self.deactivateAllPorts(self.portCheckBoxes));
+        activateAllButton = tk.Button(master, text = "Activate all ports", command = self.activateAllPorts);
+        deactivateAllButton = tk.Button(master, text = "Deactivate all ports", command = self.deactivateAllPorts);
         exitButton = tk.Button(master, text = "Exit", command = self.exit);
         settingsButton = tk.Button(master, text = "Settings", command = self.makeSettingsWindow);
         
@@ -80,16 +80,16 @@ class SwitchGUI(tk.Frame):
         self.settings = settings(tk.Toplevel(self), self);
         return;
       #activate all the checkboxes
-    def activateAllPorts(self, checkBoxes):
-        for box in checkBoxes:
-            box.deselect();
-            box.invoke();
+    def activateAllPorts(self):
+        for i in range(numPorts):
+            self.buttonVar[i] = 1;
+            self.portButtons[i].invoke();
         return;
       #deactivate all the checkboxes
-    def deactivateAllPorts(self, checkBoxes):
-        for box in checkBoxes:
-            box.select();
-            box.invoke();
+    def deactivateAllPorts(self):
+        for i in range(numPorts):
+            self.buttonVar[i] = 0;
+            self.portButtons[i].invoke();
         return;
       #determine which port a clicked box corresponds to, and whether to turn it on or off
     def portInteract(self, i):
