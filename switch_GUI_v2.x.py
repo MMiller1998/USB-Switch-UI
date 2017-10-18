@@ -67,13 +67,13 @@ class SwitchGUI(tk.Frame):
                 var.set("Port " + str(i + 1));
                 self.settings_file.write(var.get() + "\n");
                 self.labelVars.append(var);
-                self.portNumbers.append(tk.Label(self.master, textvariable = self.labelVars[i]));
-        self.packLabels();
+                self.portNumbers.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
+        self.packButtons();
         return;
       #put the labels in the GUI
-    def packLabels(self):
+    def packButtons(self):
         for i in range(numPorts):
-            self.portNumbers[i].grid(column = 0, row = i + 1, padx = 25, pady = 5);
+            self.portNumbers[i].grid(column = 0, row = i + 1, columnspan = 2, padx = 25, pady = 5);
         return;
       #make the settings window
     def makeSettingsWindow(self):
