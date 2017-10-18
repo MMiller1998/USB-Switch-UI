@@ -73,7 +73,7 @@ class SwitchGUI(tk.Frame):
       #put the labels in the GUI
     def packButtons(self):
         for i in range(numPorts):
-            self.portButtons[i].grid(column = 0, row = i + 1, columnspan = 2, padx = 25, pady = 5);
+            self.portButtons[i].grid(column = 0, row = i + 1, columnspan = 2, sticky = "w" + "e", padx = 25, pady = 5);
         return;
       #make the settings window
     def makeSettingsWindow(self):
