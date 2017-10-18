@@ -21,11 +21,11 @@ class SwitchGUI(tk.Frame):
             self.settings_file = open("./config.txt", "w+");
         
         #Create widgets
-          #label creation gets its own function for creation and packing so that it can be called again whenever names are changed. Other widgets are static, so no function
+          #Button creation gets its own function for creation and packing so that it can be called again whenever names are changed. Other widgets are static, so no function
         self.buttonVar = [];
         for i in range(numPorts):
             self.buttonVar.append(1);
-        self.portNumbers = [];
+        self.portButtons = [];
         self.makeButtons();
           #the checkboxes to turn ports on and off
 
@@ -45,11 +45,11 @@ class SwitchGUI(tk.Frame):
       #make the labels for the GUI, then call the packing function
     def makeButtons(self):
         #if the labels have already been made, they need to be destroyed, otherwise the new labels will just be placed on top of the old ones
-        if(len(self.portNumbers) != 0):
+        if(len(self.portButtons) != 0):
             for i in range(numPorts):
-                GUI.portNumbers[i].destroy();
+                self.portButtons[i].destroy();
         self.labelVars = [];
-        self.portNumbers = [];
+        self.portButtons = [];
         self.settings_file.seek(0);
         i = 0;
         for line in self.settings_file:
@@ -60,20 +60,20 @@ class SwitchGUI(tk.Frame):
                 var = tk.StringVar();
                 var.set(self.settings_file.readline().rstrip());
                 self.labelVars.append(var);
-                self.portNumbers.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
+                self.portButtons.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
         else:
             for i in range(numPorts):
                 var = tk.StringVar();
                 var.set("Port " + str(i + 1));
                 self.settings_file.write(var.get() + "\n");
                 self.labelVars.append(var);
-                self.portNumbers.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
+                self.portButtons.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
         self.packButtons();
         return;
       #put the labels in the GUI
     def packButtons(self):
         for i in range(numPorts):
-            self.portNumbers[i].grid(column = 0, row = i + 1, columnspan = 2, padx = 25, pady = 5);
+            self.portButtons[i].grid(column = 0, row = i + 1, columnspan = 2, padx = 25, pady = 5);
         return;
       #make the settings window
     def makeSettingsWindow(self):
@@ -110,7 +110,7 @@ class SwitchGUI(tk.Frame):
         switchConnect.request("GET", urlExtension);
         switchConnect.getresponse();
         switchConnect.close();
-        self.portNumbers[portNum].config(bg = "lime green");
+        self.portButtons[portNum].config(bg = "lime green");
         return;
       #turn off a port
     def turnPortOff(self, portNum):
@@ -122,7 +122,7 @@ class SwitchGUI(tk.Frame):
         switchConnect.request("GET", urlExtension);
         switchConnect.getresponse();
         switchConnect.close();
-        self.portNumbers[portNum].config(bg = "SystemButtonFace");
+        self.portButtons[portNum].config(bg = "SystemButtonFace");
         return;
       #close the settings file and exit the GUI
     def exit(self):
