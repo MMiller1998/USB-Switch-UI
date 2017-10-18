@@ -13,7 +13,6 @@ class SwitchGUI(tk.Frame):
         self.master = master;
         self.frame = tk.Frame(self.master);
         master.title("USB Switch Interface");
-        master.minsize(width = 200, height = 548);
 
         #Open the settings file so name changes can be permanently saved
         try:
@@ -142,7 +141,6 @@ class settings(tk.Frame):
         tk.Frame.__init__(self);
         self.master = master;
         master.title("Settings");
-        master.minsize(width = 175, height = 547);
 
         #Create widgets
           #make labels using the already made SwitchGUI label variables, and create the entry boxes for taking in name changes
