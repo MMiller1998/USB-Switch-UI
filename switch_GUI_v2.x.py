@@ -103,7 +103,7 @@ class SwitchGUI(tk.Frame):
       #turn on a port
     def turnPortOn(self, portNum):
         switchConnect = http.client.HTTPConnection("10.10.1.229");
-        if(portNum < 6):
+        if(portNum < 5):
             urlExtension = "/8080/0" + str(portNum * 2 + 1);
         else:
             urlExtension = "/8080/" + str(portNum * 2 + 1);
@@ -115,7 +115,7 @@ class SwitchGUI(tk.Frame):
       #turn off a port
     def turnPortOff(self, portNum):
         switchConnect = http.client.HTTPConnection("10.10.1.229");
-        if(portNum < 6):
+        if(portNum < 5):
             urlExtension = "/8080/0" + str(portNum * 2);
         else:
             urlExtension = "/8080/" + str(portNum * 2);
