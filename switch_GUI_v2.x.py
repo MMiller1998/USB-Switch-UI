@@ -61,6 +61,8 @@ class SwitchGUI(tk.Frame):
                 var.set(self.settings_file.readline().rstrip());
                 self.labelVars.append(var);
                 self.portButtons.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
+                if(self.buttonVar[i] == 0):
+                    self.portButtons[i].config(bg = "lime green");
         else:
             for i in range(numPorts):
                 var = tk.StringVar();
