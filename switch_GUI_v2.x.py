@@ -70,6 +70,8 @@ class SwitchGUI(tk.Frame):
                 self.settings_file.write(var.get() + "\n");
                 self.labelVars.append(var);
                 self.portButtons.append(tk.Button(self.master, textvariable = self.labelVars[i], command = partial(self.portInteract, i)));
+                if(self.buttonVar[i] == 0):
+                    self.portButtons[i].config(bg = "lime green");
         self.packButtons();
         return;
       #put the labels in the GUI
