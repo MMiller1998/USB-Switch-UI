@@ -43,7 +43,7 @@
       const ON = 1;
       const OFF = 0;
 
-      for (var i = 1; i <= 16; i++) 
+      for (var i = 1; i <= 16; i++)
       {
         var button = document.createElement("button");
         button.setAttribute("id", "button" + i);
@@ -51,8 +51,8 @@
         button.setAttribute("onClick", "changeColor(this.id)");
         button.innerText = "Switch " + i;
         button.setAttribute("value", OFF);
-        
-        if (i < 9) 
+
+        if (i < 9)
         {
           document.getElementById("col1").appendChild(button);
         }
@@ -70,12 +70,42 @@
           button.style.backgroundColor = 'green';
           button.value = ON;
         }
-        else if (button.value == ON) 
+        else if (button.value == ON)
         {
           button.style.backgroundColor = 'red';
           button.value = OFF;
         }
       }
+
+      function testConnection(){
+        var x = new XMLHttpRequest();
+        var file = "http://10.10.1.25:8080/login?from=%2F";
+        x.open('HEAD', file , true);
+        x.send();
+
+        x.addEventListener("readystatechange", processRequest, false);
+
+        function processRequest(e)
+        {
+          if(x.readyState == 4)
+          {
+            if(x.status >= 200 && x.status < 304)
+            {
+              alert("connection exists!");
+            }
+            else
+            {
+              alert("connection doesn't exist! Please check the connection to the Switch. ");
+            }
+          }
+
+        }
+      }
+
+      testConnection();
+
+
+      function turnPortOn
 
     </script>
 
