@@ -34,7 +34,8 @@
     </div>
     <div class="col2" id="col2">
     </div>
-
+<script src="portScript.js"></script>
+<script src="testConnection.js"></script>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
@@ -43,7 +44,7 @@
       const ON = 1;
       const OFF = 0;
 
-      for (var i = 0; i < 16; i++)
+      for (var i = 1; i <= 16; i++)
       {
         var button = document.createElement("button");
         button.setAttribute("id", i);
@@ -52,7 +53,7 @@
         button.innerText = "Switch " + i;
         button.setAttribute("value", OFF);
 
-        if (i < 8)
+        if (i <= 8)
         {
           document.getElementById("col1").appendChild(button);
         }
@@ -77,82 +78,11 @@
         }
       }
 
-      function testConnection(){
-        var x = new XMLHttpRequest();
-        var file = "http://10.10.1.229";
-        x.open('HEAD', file , true);
-        x.send();
-
-        x.addEventListener("readystatechange", processRequest, false);
-
-        function processRequest(e)
-        {
-          if(x.readyState == 4)
-          {
-            if(x.status >= 200 && x.status < 304)
-            {
-              alert("connection exists!");
-            }
-            else
-            {
-              alert("connection doesn't exist! Please check the connection to the Switch. ");
-            }
-          }
-
-        }
-      }
-
-      testConnection();
 
 
-      function turnPortOn(portNum){
-        var switchConnect = new XMLHttpRequest();
-        var addie = "http://10.10.1.229"
-        if(portNum < 5){
-          var y = (portNum * 2) + 1;
-          var urlExtension = "/8080/0" + y.toString();
-        }
-        else{
-          var y = (portNum * 2) + 1;
-          var urlExtension = "/8080/" + y.toString();
-        }
-        switchConnect.open('GET', addie + urlExtension, true);
-        switchConnect.send();
-
-      }
 
 
-      function turnPortOff(portNum){
-        var switchConnect = new XMLHttpRequest();
-        var addie = "http://10.10.1.229"
-        if(portNum < 5){
-        var y = portNum * 2;
-        var urlExtension = "/8080/0" + y.toString();
-        }
-        else{
-        var y = portNum * 2;
-        var urlExtension = "/8080/" + y.toString();
-        }
-        switchConnect.open('GET', addie + urlExtension, true);
-        switchConnect.send();
-      }
 
-      function portInteract(id){
-        var button = document.getElementById(id);
-        if(button.value == OFF)
-        {
-          turnPortOn(button.id);
-          changeColor(button.id);
-          button.value = ON;
-        }
-        else {
-          {
-            turnPortOff(button.id);
-            changeColor(button.id);
-            button.value = OFF;
-          }
-        }
-      }
 
     </script>
 
