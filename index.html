@@ -43,16 +43,16 @@
       const ON = 1;
       const OFF = 0;
 
-      for (var i = 1; i <= 16; i++)
+      for (var i = 0; i < 16; i++)
       {
         var button = document.createElement("button");
-        button.setAttribute("id", "button" + i);
+        button.setAttribute("id", i);
         button.setAttribute("class", "btn");
-        button.setAttribute("onClick", "changeColor(this.id)");
+        button.setAttribute("onClick", "portInteract(this.id)");
         button.innerText = "Switch " + i;
         button.setAttribute("value", OFF);
 
-        if (i < 9)
+        if (i < 8)
         {
           document.getElementById("col1").appendChild(button);
         }
@@ -79,7 +79,7 @@
 
       function testConnection(){
         var x = new XMLHttpRequest();
-        var file = "http://10.10.1.25:8080/login?from=%2F";
+        var file = "http://10.10.1.229";
         x.open('HEAD', file , true);
         x.send();
 
@@ -105,7 +105,54 @@
       testConnection();
 
 
-      function turnPortOn
+      function turnPortOn(portNum){
+        var switchConnect = new XMLHttpRequest();
+        var addie = "http://10.10.1.229"
+        if(portNum < 5){
+          var y = (portNum * 2) + 1;
+          var urlExtension = "/8080/0" + y.toString();
+        }
+        else{
+          var y = (portNum * 2) + 1;
+          var urlExtension = "/8080/" + y.toString();
+        }
+        switchConnect.open('GET', addie + urlExtension, true);
+        switchConnect.send();
+
+      }
+
+
+      function turnPortOff(portNum){
+        var switchConnect = new XMLHttpRequest();
+        var addie = "http://10.10.1.229"
+        if(portNum < 5){
+        var y = portNum * 2;
+        var urlExtension = "/8080/0" + y.toString();
+        }
+        else{
+        var y = portNum * 2;
+        var urlExtension = "/8080/" + y.toString();
+        }
+        switchConnect.open('GET', addie + urlExtension, true);
+        switchConnect.send();
+      }
+
+      function portInteract(id){
+        var button = document.getElementById(id);
+        if(button.value == OFF)
+        {
+          turnPortOn(button.id);
+          changeColor(button.id);
+          button.value = ON;
+        }
+        else {
+          {
+            turnPortOff(button.id);
+            changeColor(button.id);
+            button.value = OFF;
+          }
+        }
+      }
 
     </script>
 
