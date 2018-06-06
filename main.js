@@ -1,19 +1,25 @@
 // Modules to control application life and create native browser window
+const electron = require('electron')
 const {app, BrowserWindow} = require('electron')
+//const Menu = electron.Menu
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
 function createWindow () {
+
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 300, height: 400})
+
+  module.exports = 'menu'
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -22,7 +28,41 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  // settingsWindow = new BroswerWindow({
+  //   width: 150,
+  //   height: 200,
+  //   show: false
+  // })
+
+  // settingsWindow.loadURL('file://' + __dirname + '/settings.html')
 }
+
+// function createMenu() {
+//   const menuTemplate = [
+//     {
+//       label: 'Electron',
+//       submenu: [
+//           {
+//               label: 'About ...',
+//               click: () => {
+//                   console.log("About Clicked");
+//               }
+//           }, {
+//             type: 'separator'
+//           }, {
+//               label: 'Quit',
+//               click: () => {
+//                   app.quit();
+//               }
+//           }
+//       ]
+//     }
+//   ]
+
+//   const menu = Menu.buildFromTemplate(menuTemplate)
+//   Menu.setApplicationMenu(menu)
+// }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
