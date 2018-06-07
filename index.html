@@ -4,7 +4,7 @@
   .btn {
     border: none;
     color: black;
-    padding: 10px 20px;
+    padding: 15px 20px;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
@@ -13,7 +13,7 @@
     display: block;
     background-color: red;
     width: 150px;
-    height: 50px;
+    word-wrap: break-word;
   }
   .col1 {
     float: left;
@@ -43,6 +43,16 @@
         updateBtns(arg)
       })
       
+      windowIpc.on('ports-on', () => {
+        console.log("All ports on")
+        activateAll()
+      })
+      
+      windowIpc.on('ports-off', () => {
+        console.log("All ports off")
+        deactivateAll()
+      })
+
       function sendNames() {      
         var btnArray = getBtnNames();
         windowIpc.send('main-window-btns', btnArray)

@@ -15,7 +15,6 @@ var appClose = false
 var btnNames = [];
 
 function mainLoop () {
-
   // Create the browser windows
   mainWindow = new BrowserWindow({
     width: 350, 
@@ -34,6 +33,7 @@ function mainLoop () {
     parent: mainWindow
   })
 
+  mainWindow.webContents.send('ping', 'whoooooooooooooooooh')
   // Closes main window and shuts down app.
   mainWindow.on('close', (event) => {
     mainWindow = null
@@ -80,11 +80,12 @@ function mainLoop () {
 
   mainIpc.on('activate-all', () => {
     console.log("Activate all")
-    
+    mainWindow.webContents.send('ports-on')
   })
 
   mainIpc.on('deactivate-all', () => {
     console.log("Deactivate all")
+    mainWindow.webContents.send('ports-off')
   })
 
   mainIpc.on('btn-rename', (event, arg) => {

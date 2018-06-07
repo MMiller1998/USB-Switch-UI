@@ -1,5 +1,5 @@
 function testConnection(){
-  var httpConnection = new httpConnectionMLHttpRequest();
+  var httpConnection = new XMLHttpRequest();
   var file = "http://10.10.1.229";
   httpConnection.open('HEAD', file , true);
   httpConnection.send();
@@ -17,7 +17,7 @@ function testConnection(){
       else
       {
         console.log("Connection doesn't exist! Please check the connection to the Switch. The app will automatically close now.  ");
-        window.close();
+        //window.close();
       }
     }
 

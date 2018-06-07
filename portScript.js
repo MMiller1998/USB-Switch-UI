@@ -11,7 +11,6 @@ function turnPortOn(portNum){
   }
   switchConnect.open('GET', addie + urlExtension, true);
   switchConnect.send();
-
 }
 
 
@@ -45,4 +44,46 @@ function portInteract(id){
       button.value = OFF;
     }
   }
+}
+
+function activateAll() {
+  var buttons = document.body.getElementsByClassName('btn');
+
+  for (var button of buttons) {
+    turnPortOn(button.id);
+    button.value = ON;
+    button.style.backgroundColor = 'green';
+  }
+
+  var allOn = false;
+  for (var button of buttons) {
+    if (button.value == ON) {
+      allOn = true;
+    } else {
+      allOn = false;
+      break;
+    }
+  }
+  console.log(allOn)
+}
+
+function deactivateAll() {
+  var buttons = document.body.getElementsByClassName('btn');
+
+  for (var button of buttons) {
+    turnPortOn(button.id);
+    button.value = OFF;
+    button.style.backgroundColor = 'red';
+  }
+
+  var allOff = false;
+  for (var button of buttons) {
+    if (button.value == OFF) {
+      allOn = true;
+    } else {
+      allOn = false;
+      break;
+    }
+  }
+  console.log(allOff)
 }

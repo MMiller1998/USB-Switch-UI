@@ -1,9 +1,10 @@
-const prompt = require('electron-prompt')
+const prompt = require('electron-prompt');
 
 const ON = 1;
 const OFF = 0;
+const BUTTON_CLASS = 'btn';
 
-var settingsFile = require('./settings')
+const settingsFile = require('./settings');
 
 function createIndexBtns() {
     var col1 = document.createElement('div')
@@ -21,7 +22,7 @@ function createIndexBtns() {
     {
       let button = document.createElement("button");
       button.setAttribute("id", i);
-      button.setAttribute("class", "btn");
+      button.setAttribute("class", BUTTON_CLASS);
       button.setAttribute("onClick", "portInteract(this.id)");
       button.innerText = "Switch " + i;
       button.setAttribute("value", OFF);
@@ -54,7 +55,7 @@ function createRenameMenuBtns() {
     {
       let button = document.createElement("button");
       button.setAttribute("id", i);
-      button.setAttribute("class", "btn");
+      button.setAttribute("class", BUTTON_CLASS);
       button.setAttribute("onClick", "btnRename(this.id)");
       button.innerText = "Switch " + i;
     
@@ -68,17 +69,17 @@ function createRenameMenuBtns() {
       }
     }
 
-    var btnList = document.getElementsByClassName('btn')
+    var btnList = document.getElementsByClassName(BUTTON_CLASS)
 }
 
 function getBtnNames() {
     let btnNameArray = [];
 
-    let btnArray = document.getElementsByClassName('btn')
+    let btnArray = document.getElementsByClassName(BUTTON_CLASS)
     
     for (let button of btnArray) {
         btnNameArray.push(button.innerText)
-        console.log("Button name pushed: ", button.innerText)
+        //console.log("Button name pushed: ", button.innerText)
     }
 
     return btnNameArray;
@@ -120,13 +121,13 @@ function btnRename(id) {
 
         console.log("Updated button name: " ,button.innerText)
 
-        windowIpc.send('btn-rename', btnNameArray);
+        settingsIpc.send('btn-rename', btnNameArray);
     })
     .catch(console.error)
 }
 
 function updateBtns(btnNames) {
-    var renameBtns = document.getElementsByClassName('btn')
+    var renameBtns = document.getElementsByClassName(BUTTON_CLASS)
 
     for (let i = 0; i < 16; i++) {
         renameBtns[i].innerText = btnNames[i]
