@@ -1,6 +1,6 @@
 function testConnection(){
   var x = new XMLHttpRequest();
-  var file = "http://10.10.1.22";
+  var file = "http://10.10.1.229";
   x.open('HEAD', file , true);
   x.send();
 
