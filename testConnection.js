@@ -1,22 +1,22 @@
 function testConnection(){
-  var x = new XMLHttpRequest();
+  var httpConnection = new httpConnectionMLHttpRequest();
   var file = "http://10.10.1.229";
-  x.open('HEAD', file , true);
-  x.send();
+  httpConnection.open('HEAD', file , true);
+  httpConnection.send();
 
-  x.addEventListener("readystatechange", processRequest, false);
+  httpConnection.addEventListener("readystatechange", processRequest, false);
 
   function processRequest(e)
   {
-    if(x.readyState == 4)
+    if(httpConnection.readyState == 4)
     {
-      if(x.status >= 200 && x.status < 304)
+      if(httpConnection.status >= 200 && httpConnection.status < 304)
       {
-        alert("Connection exists!");
+        console.log("Connection exists!");
       }
       else
       {
-        alert("Connection doesn't exist! Please check the connection to the Switch. The app will automatically close now.  ");
+        console.log("Connection doesn't exist! Please check the connection to the Switch. The app will automatically close now.  ");
         window.close();
       }
     }

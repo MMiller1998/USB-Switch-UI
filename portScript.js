@@ -35,13 +35,13 @@ function portInteract(id){
   if(button.value == OFF)
   {
     turnPortOn(button.id);
-    changeColor(button.id);
+    btnClick(button.id);
     button.value = ON;
   }
   else {
     {
       turnPortOff(button.id);
-      changeColor(button.id);
+      btnClick(button.id);
       button.value = OFF;
     }
   }

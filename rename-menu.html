@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <style>
+    .btn {
+        /*border: none;
+        border-width: 2px;
+        color: black;*/
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 12px;
+        margin: 2px 2px;
+        cursor: pointer;
+        display: block;
+        /*background-color: white;*/
+        width: 115px;
+    }
+    .col1 {
+        float: left;
+    }
+    .col2 {
+        float: right;
+    }
+    </style>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Rename A Port</title>
+    </head>
+    
+    <body>
+        <script type="text/javascript" src="settings.js"></script>
+        <script type="text/javascript" src="buttons.js"></script>
+        <script>
+            createRenameMenuBtns()
+            settingsIpc.on('rename-menu-init', (event, arg) => {
+                console.log("New menu names recieved")
+                updateBtns(arg)
+            })
+        </script>
+    </body>
+</html>
