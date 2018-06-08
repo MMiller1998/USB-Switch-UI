@@ -22,7 +22,7 @@ function createIndexBtns() {
     {
       let button = document.createElement("button");
       button.setAttribute("id", i);
-      button.setAttribute("class", "btn");
+      button.setAttribute("class", BUTTON_CLASS);
       button.setAttribute("onClick", "portInteract(this.id)");
       button.innerText = "Switch " + i;
       button.setAttribute("value", OFF);
