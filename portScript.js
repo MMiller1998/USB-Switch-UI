@@ -11,8 +11,6 @@ function turnPortOn(portNum){
   }
   switchConnect.open('GET', addie + urlExtension, true);
   switchConnect.send();
-
-  console.log("Switch " + portNum + " turned on")
 }
 
 
@@ -29,13 +27,10 @@ function turnPortOff(portNum){
   }
   switchConnect.open('GET', addie + urlExtension, true);
   switchConnect.send();
-
-  console.log("Switch " + portNum + " turned off")
 }
 
 function portInteract(id){
   var button = document.getElementById(id);
-  console.log(button.innerText + " clicked")
   if(button.value == OFF)
   {
     turnPortOn(button.id);
@@ -76,7 +71,7 @@ function deactivateAll() {
   var buttons = document.body.getElementsByClassName('btn');
 
   for (var button of buttons) {
-    turnPortOff(button.id);
+    turnPortOn(button.id);
     button.value = OFF;
     button.style.backgroundColor = 'red';
   }
@@ -84,9 +79,9 @@ function deactivateAll() {
   var allOff = false;
   for (var button of buttons) {
     if (button.value == OFF) {
-      allOff = true;
+      allOn = true;
     } else {
-      allOff = false;
+      allOn = false;
       break;
     }
   }
