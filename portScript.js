@@ -1,16 +1,18 @@
 function turnPortOn(portNum){
   var switchConnect = new XMLHttpRequest();
   var addie = "http://10.10.1.229"
-  if(portNum <= 5){
-    var y = (portNum * 2) - 1;
-    var urlExtension = "/8080/0" + y.toString();
-  }
-  else{
-    var y = (portNum * 2) - 1;
-    var urlExtension = "/8080/" + y.toString();
-  }
-  switchConnect.open('GET', addie + urlExtension, true);
+   if(portNum <= 5){
+     var y = (portNum * 2) - 1;
+     var urlExtension = "/8080/0" + y.toString();
+   }
+   else{
+     var y = (portNum * 2) - 1;
+     var urlExtension = "/8080/" + y.toString();
+   }
+  switchConnect.open('GET', addie + urlExtension, false);
   switchConnect.send();
+
+  
 }
 
 
@@ -25,7 +27,7 @@ function turnPortOff(portNum){
   var y = (portNum * 2) - 2;
   var urlExtension = "/8080/" + y.toString();
   }
-  switchConnect.open('GET', addie + urlExtension, true);
+  switchConnect.open('GET', addie + urlExtension, false);
   switchConnect.send();
 }
 
@@ -71,7 +73,7 @@ function deactivateAll() {
   var buttons = document.body.getElementsByClassName('btn');
 
   for (var button of buttons) {
-    turnPortOn(button.id);
+    turnPortOff(button.id);
     button.value = OFF;
     button.style.backgroundColor = 'red';
   }
@@ -87,3 +89,5 @@ function deactivateAll() {
   }
   console.log(allOff)
 }
+
+

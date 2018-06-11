@@ -33,6 +33,7 @@
     <script type="text/javascript" src="buttons.js"></script>
     <script type="text/javascript" src="portScript.js"></script>
     <script type="text/javascript" src="testConnection.js"></script>
+    <script type="text/javascript" src="statusUpdate.js"></script>
     <script>
       const windowIpc = require('electron').ipcRenderer
       createIndexBtns();
@@ -57,6 +58,12 @@
         var btnArray = getBtnNames();
         windowIpc.send('main-window-btns', btnArray)
       }
+    
+
+
+      
+     
+
     </script>
 
   </body>
