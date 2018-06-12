@@ -1,3 +1,7 @@
+/*
+Connects to the network switch, closes app if connection cannot be made
+*/
+
 function testConnection(){
   var httpConnection = new XMLHttpRequest();
   var file = "http://10.10.1.229";
@@ -6,21 +10,16 @@ function testConnection(){
 
   httpConnection.addEventListener("readystatechange", processRequest, false);
 
-  function processRequest(e)
-  {
-    if(httpConnection.readyState == 4)
-    {
-      if(httpConnection.status >= 200 && httpConnection.status < 304)
-      {
+  function processRequest(e) {
+    if (httpConnection.readyState == 4) {
+
+      if (httpConnection.status >= 200 && httpConnection.status < 304) {
         console.log("Connection exists!");
-      }
-      else
-      {
+      } else {
         console.log("Connection doesn't exist! Please check the connection to the Switch. The app will automatically close now.  ");
-        //window.close();
+        window.close();
       }
     }
-
   }
 }
 

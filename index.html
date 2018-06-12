@@ -25,11 +25,10 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Switch Port Control  </title>
+    <title>Switch Port Control</title>
   </head>
 
   <body>
-    <!-- <script type="text/javascript" src="settings.js"></script> -->
     <script type="text/javascript" src="buttons.js"></script>
     <script type="text/javascript" src="portScript.js"></script>
     <script type="text/javascript" src="testConnection.js"></script>
@@ -40,30 +39,24 @@
       sendNames();
 
       windowIpc.on('btn-updated', (event, arg) => {
-        console.log("New main window names recieved")
-        updateBtns(arg)
+        console.log("New main window names recieved");
+        updateBtns(arg);
       })
       
       windowIpc.on('ports-on', () => {
-        console.log("All ports on")
-        activateAll()
+        console.log("All ports on");
+        activateAll();
       })
       
       windowIpc.on('ports-off', () => {
-        console.log("All ports off")
-        deactivateAll()
+        console.log("All ports off");
+        deactivateAll();
       })
 
       function sendNames() {      
         var btnArray = getBtnNames();
-        windowIpc.send('main-window-btns', btnArray)
+        windowIpc.send('main-window-btns', btnArray);
       }
-    
-
-
-      
-     
-
     </script>
 
   </body>
