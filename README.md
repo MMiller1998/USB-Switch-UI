@@ -43,7 +43,7 @@ npm install electron-builder --save-dev
 Add `"pack": "build --dir"` and `"dist": "build"` to the `"scripts"` section of your `package.json`. Create a new `"build"`secton in `package.json` and create desired fields. Consult the [electron builder wiki](https://www.electron.build/) to see all the ways you can customize your build. For packaging the app on Windows, create
 ```json
 "win": {
-  "target": "NSIS";
+  "target": "NSIS",
   "icon": "build/icon.ico"
 }
 ```
