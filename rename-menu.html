@@ -36,7 +36,8 @@
       
 
 			windowIpc.on('rename-menu-init', (event, arg) => {
-				console.log("Rename buttons names received");
+        console.log("Rename buttons names received");
+        console.log(arg)
 				updateBtns(arg);
       })
       

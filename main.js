@@ -7,6 +7,8 @@ const dialog = require('electron').dialog;
 
 // Button name config file
 const configFile = `${process.resourcesPath}/data/config.txt`;
+// const configFile = 'data/config.txt';
+const defaultConfigFile = 'data/default_config.txt'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -41,6 +43,8 @@ function mainLoop () {
   // Loads button name configurations
   btnNames = loadConfig();
   console.log("btnNames: " + btnNames)
+  console.log("btnNames is array: " + Array.isArray(btnNames));
+  console.log("btnNames length: " + btnNames.length);
 
   // Closes main window and shuts down app.
   mainWindow.on('close', (event) => {
@@ -117,7 +121,12 @@ function mainLoop () {
 
   mainIpc.on('main-window-btns', (event, arg) => {
     console.log("Names initialized");
-    btnNames = arg;
+
+    if (btnNames.length == 0) {
+      console.log("btnNames set to default names");
+      btnNames = arg;
+    }
+
     renameWindow.webContents.send('rename-menu-init', btnNames);
   })
 
@@ -157,10 +166,12 @@ function loadConfig() {
     var configArray = configString.split(",");
     console.log("Load complete");
 
-  return configArray;
+    return configArray;
   } catch (err) {
     var fileNotFoundMsg = err.message + "\nUsing default button names"
     dialog.showMessageBox({ message: fileNotFoundMsg});
+
+    return [];
   }
   
 }

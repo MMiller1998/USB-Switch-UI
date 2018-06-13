@@ -1,6 +1,6 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.4",
+  "name": "switchUI",
+  "version": "1.0.6",
   "description": "A minimal Electron application to turn on and off switch ports",
   "main": "main.js",
   "scripts": {
@@ -8,13 +8,12 @@
     "pack": "build --dir",
     "dist": "build"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/MMiller1998/pyUI.git",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "switch",
+    "UI",
+    "switchUI",
+    "whydidthistakeaweek"
   ],
   "author": "Jacob Chapman, Joshua Park",
   "license": "CC0-1.0",
@@ -31,9 +30,10 @@
   },
   "build": {
     "appId": "switchUI",
+    "productName": "switchUI",
     "win": {
       "target": "NSIS"
     },
-    "extraResources": ["./data/config.txt"]
+    "extraResources": ["./data/*config.txt"]
   }
 }

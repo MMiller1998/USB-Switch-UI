@@ -20,9 +20,9 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 
 ```bash
 # Clone this repository
-git clone https://github.com/electron/electron-quick-start
+git clone https://github.com/MMiller1998/pyUI.git
 # Go into the repository
-cd electron-quick-start
+cd pyUI
 # Install dependencies
 npm install
 # Run the app
@@ -33,7 +33,7 @@ Note: If you're using Linux Bash for Windows, [see this guide](https://www.howto
 
 ## Packing app for Windows
 
-Create a directory `build` in the root of the project and save a `.png`, `.icns`, and an `.ico` image to use as the icon for the app.
+OPTIONAL: Create a directory `build` in the root of the project and save a `.png`, `.icns`, and an `.ico` image to use as the icon for the app. Else, the app will default to the electron icon.
 
 All electron-builder to your devDependencies by running:
 ```bash
@@ -48,11 +48,7 @@ Add `"pack": "build --dir"` and `"dist": "build"` to the `"scripts"` section of 
 }
 ```
 
-Run 
-```bash
-npm run dist
-```
-to start the build process. The executable should appear in the `dist` folder in the root directory.
+Run `npm run dist` to start the build process. The executable should appear in the `dist` folder in the root directory.
 
 ## Resources for Learning Electron
 

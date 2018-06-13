@@ -28,7 +28,9 @@
         windowIpc.send('btn-init');
         
         windowIpc.on('btn-init-reply', (event, arg) => {
-          updateBtns(arg);
+          if (arg.length != 0) {
+            updateBtns(arg);
+          }
           console.log("Main buttons initialized");
         })
 
