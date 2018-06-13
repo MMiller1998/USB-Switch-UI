@@ -3,9 +3,10 @@ const electron = require('electron');
 const {app, BrowserWindow} = require('electron');
 const mainIpc = require('electron').ipcMain;
 const fs = require('fs');
+const dialog = require('electron').dialog;
 
 // Button name config file
-const configFile = 'data/config.txt';
+const configFile = `${process.resourcesPath}/data/config.txt`;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -116,6 +117,7 @@ function mainLoop () {
 
   mainIpc.on('main-window-btns', (event, arg) => {
     console.log("Names initialized");
+    btnNames = arg;
     renameWindow.webContents.send('rename-menu-init', btnNames);
   })
 
@@ -150,10 +152,15 @@ app.on('activate', function () {
 function loadConfig() {
   console.log("Loading configurations");
 
-  var configString = fs.readFileSync(configFile).toString();
-  var configArray = configString.split(",");
-
-  console.log("Load complete");
+  try {
+    var configString = fs.readFileSync(configFile).toString();
+    var configArray = configString.split(",");
+    console.log("Load complete");
 
   return configArray;
+  } catch (err) {
+    var fileNotFoundMsg = err.message + "\nUsing default button names"
+    dialog.showMessageBox({ message: fileNotFoundMsg});
+  }
+  
 }

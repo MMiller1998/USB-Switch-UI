@@ -1,6 +1,6 @@
 {
   "name": "electron-quick-start",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "A minimal Electron application to turn on and off switch ports",
   "main": "main.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "appId": "switchUI",
     "win": {
       "target": "NSIS"
-    }
+    },
+    "extraResources": ["./data/config.txt"]
   }
 }
