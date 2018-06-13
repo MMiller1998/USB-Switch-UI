@@ -5,12 +5,25 @@
 	text-align: center;
 	text-decoration: none;
 	font-size: 16px;
-	margin: 2px 2px;
+	margin: 5px 2px;
 	cursor: pointer;
 	display: block;
 	background-color: red;
 	width: 150px;
 	word-wrap: break-word;
+}
+
+.close-btn {
+  text-align: center;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 5px 0px;
+  cursor: pointer;
+  display: block;
+  width: 115px;
+  word-wrap: break-word;
 }
 
 .col1 {

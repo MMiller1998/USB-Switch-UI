@@ -18,7 +18,7 @@
 				text-align: center;
 				text-decoration: none;
 				font-size: 12px;
-				margin: 2px 0px;
+				margin: 5px 0px;
 				cursor: pointer;
 				display: block;
 				width: 115px;
@@ -28,15 +28,27 @@
 		</style>
 	
 	<body>
-		<script type="text/javascript" src="settings.js"></script>
-		<script type="text/javascript" src="buttons.js"></script>
+		<!-- <script type="text/javascript" src="scripts/settings.js"></script> -->
+		<script type="text/javascript" src="scripts/buttons.js"></script>
 		<script>
-			createRenameMenuBtns();
+      const windowIpc = require('electron').ipcRenderer
+      createRenameMenuBtns();
+      
 
-			settingsIpc.on('rename-menu-init', (event, arg) => {
-				console.log("New menu names recieved");
+			windowIpc.on('rename-menu-init', (event, arg) => {
+				console.log("Rename buttons names received");
 				updateBtns(arg);
-			})
-		</script>
+      })
+      
+      function closeBtnClick() {
+        console.log("Rename menu close button clicked");
+        windowIpc.send('close-rename-menu');
+      }
+    </script>
+    <div align="center">
+      <button class="close-btn" onclick="closeBtnClick()">
+        Close
+      </button>
+    </div>
 	</body>
 </html>

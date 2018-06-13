@@ -14,14 +14,24 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="buttons.js"></script>
-    <script type="text/javascript" src="portScript.js"></script>
-    <script type="text/javascript" src="testConnection.js"></script>
-    <script type="text/javascript" src="statusUpdate.js"></script>
+    <script type="text/javascript" src="scripts/buttons.js"></script>
+    <script type="text/javascript" src="scripts/portScript.js"></script>
+    <script type="text/javascript" src="scripts/testConnection.js"></script>
+    <script type="text/javascript" src="scripts/statusUpdate.js"></script>
     <script>
-      const windowIpc = require('electron').ipcRenderer
+      require('./scripts/settings.js');
+
+      const windowIpc = require('electron').ipcRenderer;
       setTimeout(() => {
         createIndexBtns();
+
+        windowIpc.send('btn-init');
+        
+        windowIpc.on('btn-init-reply', (event, arg) => {
+          updateBtns(arg);
+          console.log("Main buttons initialized");
+        })
+
         sendNames();
       }, 500);
 

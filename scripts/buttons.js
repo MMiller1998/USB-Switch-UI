@@ -3,13 +3,15 @@ Controls how the buttons are created and the button functions
 */
 
 const prompt = require('electron-prompt');
+const windowsIpc = require('electron').ipcRenderer
 
 // Constants
 const ON = 0;
 const OFF = 1;
 const BUTTON_CLASS = 'btn';
+const CLOSE_BTN_CLASS = "close-btn";
 
-const settingsFile = require('./settings');
+//const settingsFile = require('./settings');
 
 // Creates the buttons on the main window, called in index.html
 function createIndexBtns() {
@@ -81,7 +83,7 @@ function createRenameMenuBtns() {
 		} else {
 			document.getElementById("col2").appendChild(button);
 		}
-	}
+  }
 }
 
 // Gets the names of all the buttons
@@ -130,12 +132,13 @@ function btnRename(id) {
 		}
 
 		button.innerText = input
-		var btnNameArray = getBtnNames();
+    var btnNameArray = getBtnNames();
+    console.log(btnNameArray);
 
 		console.log("Updated button name: " ,button.innerText);
 
 		// Sends updated button names to main loop
-		settingsIpc.send('btn-rename', btnNameArray);
+		windowsIpc.send('btn-rename', btnNameArray);
 	})
 	.catch(console.error);
 }

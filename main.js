@@ -2,6 +2,10 @@
 const electron = require('electron');
 const {app, BrowserWindow} = require('electron');
 const mainIpc = require('electron').ipcMain;
+const fs = require('fs');
+
+// Button name config file
+const configFile = 'data/config.txt';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -24,7 +28,7 @@ function mainLoop () {
   })
   renameWindow = new BrowserWindow({
     width: 275,
-    height: 325,
+    height: 350,
     show: false,
     autoHideMenuBar: true,
     minimizable: false,
@@ -33,8 +37,19 @@ function mainLoop () {
     parent: mainWindow
   })
 
+  // Loads button name configurations
+  btnNames = loadConfig();
+  console.log("btnNames: " + btnNames)
+
   // Closes main window and shuts down app.
   mainWindow.on('close', (event) => {
+    fs.writeFile(configFile, btnNames, (err) => {
+      if (err) {
+        throw err;
+      }
+      console.log("Configurations saved to " + configFile);
+    });
+
     mainWindow = null;
     appClose = true;
     renameWindow.close();
@@ -69,8 +84,13 @@ function mainLoop () {
   // ipc events
   mainIpc.on('show-rename-menu', (event, arg) => {
     console.log("Rename menu opened");
-    event.sender.send('rename-menu-init', btnNames);
+    mainWindow.webContents.send('rename-menu-init', btnNames);
     renameWindow.show();
+  })
+
+  mainIpc.on('btn-init', (event, arg) => {
+    console.log("Initializing button names");
+    event.sender.send('btn-init-reply', btnNames);
   })
 
   mainIpc.on('quit-app', () => {
@@ -96,7 +116,11 @@ function mainLoop () {
 
   mainIpc.on('main-window-btns', (event, arg) => {
     console.log("Names initialized");
-    btnNames = arg;
+    renameWindow.webContents.send('rename-menu-init', btnNames);
+  })
+
+  mainIpc.on('close-rename-menu', () => {
+    renameWindow.close();
   })
 }
 
@@ -121,3 +145,15 @@ app.on('activate', function () {
     mainLoop();
   }
 })
+
+// Read button name configuration
+function loadConfig() {
+  console.log("Loading configurations");
+
+  var configString = fs.readFileSync(configFile).toString();
+  var configArray = configString.split(",");
+
+  console.log("Load complete");
+
+  return configArray;
+}
