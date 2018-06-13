@@ -1,8 +1,12 @@
 /*
 Gets the status of the buttons
 */
+const connection = require('./testConnection');
 
 function initButtonStatus() {
+	// Establishes connection with switcht
+	testConnection();
+	
 	var str1 = "";
 	var str2 = "";
 

@@ -1,10 +1,12 @@
 {
   "name": "electron-quick-start",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A minimal Electron application to turn on and off switch ports",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -14,15 +16,23 @@
     "tutorial",
     "demo"
   ],
-  "author": "Jacob Chapman",
+  "author": "Jacob Chapman, Joshua Park",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^2.0.0"
+    "electron": "^2.0.0",
+    "electron-builder": "^20.15.1",
+    "electron-packager": "^12.1.0"
   },
   "dependencies": {
     "electron-prompt": "^0.5.0",
     "ipc": "0.0.1",
     "menu": "^0.2.5",
     "remote": "^0.2.6"
+  },
+  "build": {
+    "appId": "switchUI",
+    "win": {
+      "target": "NSIS"
+    }
   }
 }

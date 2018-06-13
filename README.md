@@ -31,6 +31,29 @@ npm start
 
 Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
+## Packing app for Windows
+
+Create a directory `build` in the root of the project and save a `.png`, `.icns`, and an `.ico` image to use as the icon for the app.
+
+All electron-builder to your devDependencies by running:
+```bash
+npm install electron-builder --save-dev
+```
+
+Add `"pack": "build --dir"` and `"dist": "build"` to the `"scripts"` section of your `package.json`. Create a new `"build"`secton in `package.json` and create desired fields. Consult the [electron builder wiki](https://www.electron.build/) to see all the ways you can customize your build. For packaging the app on Windows, create
+```json
+"win": {
+  "target": "NSIS";
+  "icon": "build/icon.ico"
+}
+```
+
+Run 
+```bash
+npm run dist
+```
+to start the build process. The executable should appear in the `dist` folder in the root directory.
+
 ## Resources for Learning Electron
 
 - [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation

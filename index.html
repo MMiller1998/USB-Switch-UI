@@ -1,42 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <style>
-  .btn {
-    border: none;
-    color: black;
-    padding: 15px 20px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 2px 2px;
-    cursor: pointer;
-    display: block;
-    background-color: red;
-    width: 150px;
-    word-wrap: break-word;
-  }
-  .col1 {
-    float: left;
-  }
-  .col2 {
-    float: right;
-  }
-  </style>
-
   <head>
     <meta charset="UTF-8">
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <title>Switch Port Control</title>
   </head>
 
   <body>
+    <div id="connectionModal" class="modal">
+      <div class="modal-content box">
+        <p>Establishing connection. Please wait...</p>
+        <div class="loader"></div> 
+      </div>
+    </div>
+
     <script type="text/javascript" src="buttons.js"></script>
     <script type="text/javascript" src="portScript.js"></script>
     <script type="text/javascript" src="testConnection.js"></script>
     <script type="text/javascript" src="statusUpdate.js"></script>
     <script>
       const windowIpc = require('electron').ipcRenderer
-      createIndexBtns();
-      sendNames();
+      setTimeout(() => {
+        createIndexBtns();
+        sendNames();
+      }, 500);
 
       windowIpc.on('btn-updated', (event, arg) => {
         console.log("New main window names recieved");
