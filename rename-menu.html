@@ -1,55 +1,56 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<link href="css/style.css" type="text/css" rel="stylesheet"/>
-		<title>Rename A Port</title>
-	</head>
-	
-	<style>
-			/*Overrides btn class in style.css*/
-			.btn {
+    <head>
+        <meta charset="UTF-8">
+        <link href="css/style.css" type="text/css" rel="stylesheet"/>
+        <title>Rename A Port</title>
+    </head>
+    
+    <style>
+            /*Overrides btn class in style.css*/
+            .btn {
         border: initial;
         border-width: 2px;
         border-style: outset;
         border-color: buttonface;
         border-image: initial;
-				padding: 5px 10px;
-				text-align: center;
-				text-decoration: none;
-				font-size: 12px;
-				margin: 5px 0px;
-				cursor: pointer;
-				display: block;
-				width: 115px;
+                padding: 5px 10px;
+                text-align: center;
+                text-decoration: none;
+                font-size: 12px;
+                margin: 5px 0px;
+                cursor: pointer;
+                display: block;
+                width: 115px;
         word-wrap: break-word;
         background-color: buttonface;
-			}
-		</style>
-	
-	<body>
-		<!-- <script type="text/javascript" src="scripts/settings.js"></script> -->
-		<script type="text/javascript" src="scripts/buttons.js"></script>
-		<script>
-      const windowIpc = require('electron').ipcRenderer
-      createRenameMenuBtns();
-      
-
-			windowIpc.on('rename-menu-init', (event, arg) => {
+            }
+        </style>
+    
+    <body>
+        <!-- <script type="text/javascript" src="scripts/settings.js"></script> -->
+        <script type="text/javascript" src="scripts/buttons.js"></script>
+        <script>
+    const windowIpc = require('electron').ipcRenderer;
+    createRenameMenuBtns();
+    
+            windowIpc.on('rename-menu-init', (event, arg) => {
         console.log("Rename buttons names received");
         console.log(arg)
-				updateBtns(arg);
-      })
-      
-      function closeBtnClick() {
-        console.log("Rename menu close button clicked");
-        windowIpc.send('close-rename-menu');
-      }
+                updateBtns(arg);
+    })
+    
+    windowIpc.on('default-names', (event, arg) => {
+        updateBtns(arg);
+    })
     </script>
     <div align="center">
-      <button class="close-btn" onclick="closeBtnClick()">
+    <button id="defaults-btn" class="menu-btn" onclick="restoreDefaultsClick()">
+        Restore default names
+    </button>
+    <button id="close-btn" class="menu-btn" onclick="closeBtnClick()">
         Close
-      </button>
+    </button>
     </div>
-	</body>
+    </body>
 </html>

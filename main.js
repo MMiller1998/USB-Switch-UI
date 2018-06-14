@@ -7,8 +7,9 @@ const dialog = require('electron').dialog;
 
 // Button name config file
 const configFile = `${process.resourcesPath}/data/config.txt`;
+const defaultConfigFile = `${process.resourcesPath}/data/default_config.txt`;
 // const configFile = 'data/config.txt';
-const defaultConfigFile = 'data/default_config.txt'
+// const defaultConfigFile = 'data/default_config.txt'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -22,117 +23,143 @@ var appClose = false;
 var btnNames = [];
 
 function mainLoop () {
-  // Create the browser windows
-  mainWindow = new BrowserWindow({
-    width: 350, 
-    height: 500,
-    resizable: false,
-    fullscreen: false
-  })
-  renameWindow = new BrowserWindow({
-    width: 275,
-    height: 350,
-    show: false,
-    autoHideMenuBar: true,
-    minimizable: false,
-    fullscreen: false,
-    resizable: false,
-    parent: mainWindow
-  })
+    // Create the browser windows
+    mainWindow = new BrowserWindow({
+        width: 350, 
+        height: 500,
+        resizable: false,
+        fullscreen: false
+    })
+    renameWindow = new BrowserWindow({
+        width: 275,
+        height: 375,
+        show: false,
+        autoHideMenuBar: true,
+        minimizable: false,
+        fullscreen: false,
+        resizable: false,
+        parent: mainWindow
+    })
 
-  // Loads button name configurations
-  btnNames = loadConfig();
-  console.log("btnNames: " + btnNames)
-  console.log("btnNames is array: " + Array.isArray(btnNames));
-  console.log("btnNames length: " + btnNames.length);
+    // Loads button name configurations
+    btnNames = loadConfig();
+    console.log("btnNames: " + btnNames)
+    console.log("btnNames is array: " + Array.isArray(btnNames));
+    console.log("btnNames length: " + btnNames.length);
 
-  // Closes main window and shuts down app.
-  mainWindow.on('close', (event) => {
-    fs.writeFile(configFile, btnNames, (err) => {
-      if (err) {
-        throw err;
-      }
-      console.log("Configurations saved to " + configFile);
-    });
+    // Closes main window and shuts down app.
+    mainWindow.on('close', (event) => {
+        if (appClose) {
+            mainWindow = null;
+            renameWindow.close();
 
-    mainWindow = null;
-    appClose = true;
-    renameWindow.close();
-  })
+        } else {
+            event.preventDefault();
+            
+            dialog.showMessageBox({
+                type: 'question',
+                buttons: ['No', 'Yes'],
+                title: 'Quit?',
+                message: 'Are you sure you want to quit the application?'
+            }, (response) => {
+                // response == 0 -> No
+                // response == 1 -> Yes
+                console.log(response);
 
-  renameWindow.on('close', (event) => {
-    if (appClose) 
-    {
-      // renameWindow is set to null and closed as default, app will
-      // shut down as normal.
-      renameWindow = null;
-      console.log("Shut down");
-    }
-    else
-    {
-      // renameWindow will be hidden and can be shown again by clicking
-      // the menu option.
-      event.preventDefault();
-      renameWindow.hide();
-      console.log("Closed rename menu");
-    }
-  })
+                if (response == 1) {
 
-  // Load html files of mainWindow and renameWindow
-  mainWindow.loadFile('index.html');
-  renameWindow.loadFile('rename-menu.html');
+                    // Save configuration to config.txt
+                    fs.writeFile(configFile, btnNames, (err) => {
+                        if (err) {
+                        throw err;
+                        }
+                        console.log("Configurations saved to " + configFile);
+                    });
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-  // renameWindow.webContents.openDevTools()
+                    appClose = true;
+                    mainWindow.close();
+                }
+            })
+        }
+    })
 
-  // ipc events
-  mainIpc.on('show-rename-menu', (event, arg) => {
-    console.log("Rename menu opened");
-    mainWindow.webContents.send('rename-menu-init', btnNames);
-    renameWindow.show();
-  })
+    renameWindow.on('close', (event) => {
+        if (appClose) {
+            // renameWindow is set to null and closed as default, app will
+            // shut down as normal.
+            renameWindow = null;
+            console.log("Shut down");
+        } else {
+            // renameWindow will be hidden and can be shown again by clicking
+            // the menu option.
+            event.preventDefault();
+            renameWindow.hide();
+            console.log("Closed rename menu");
+        }
+    })
 
-  mainIpc.on('btn-init', (event, arg) => {
-    console.log("Initializing button names");
-    event.sender.send('btn-init-reply', btnNames);
-  })
+    // Load html files of mainWindow and renameWindow
+    mainWindow.loadFile('index.html');
+    renameWindow.loadFile('rename-menu.html');
 
-  mainIpc.on('quit-app', () => {
-    mainWindow.close();
-  })
+    // Open the DevTools.
+    // mainWindow.webContents.openDevTools()
+    // renameWindow.webContents.openDevTools()
 
-  mainIpc.on('activate-all', () => {
-    console.log("Activate all");
-    mainWindow.webContents.send('ports-on');
-  })
+    // ipc events
+    mainIpc.on('show-rename-menu', (event, arg) => {
+        console.log("Rename menu opened");
+        mainWindow.webContents.send('rename-menu-init', btnNames);
+        renameWindow.show();
+    })
 
-  mainIpc.on('deactivate-all', () => {
-    console.log("Deactivate all");
-    mainWindow.webContents.send('ports-off');
-  })
+    mainIpc.on('btn-init', (event, arg) => {
+        console.log("Initializing button names");
+        event.sender.send('btn-init-reply', btnNames);
+    })
 
-  mainIpc.on('btn-rename', (event, arg) => {
-    console.log("Button renamed");
-    btnNames = arg;
-    mainWindow.webContents.send('btn-updated', btnNames);
-    console.log("Update sent to main window");
-  })
+    mainIpc.on('quit-app', () => {
+        mainWindow.close();
+    })
 
-  mainIpc.on('main-window-btns', (event, arg) => {
-    console.log("Names initialized");
+    mainIpc.on('activate-all', () => {
+        console.log("Activate all");
+        mainWindow.webContents.send('ports-on');
+    })
 
-    if (btnNames.length == 0) {
-      console.log("btnNames set to default names");
-      btnNames = arg;
-    }
+    mainIpc.on('deactivate-all', () => {
+        console.log("Deactivate all");
+        mainWindow.webContents.send('ports-off');
+    })
 
-    renameWindow.webContents.send('rename-menu-init', btnNames);
-  })
+    mainIpc.on('btn-rename', (event, arg) => {
+        console.log("Button renamed");
+        btnNames = arg;
+        mainWindow.webContents.send('btn-updated', btnNames);
+        console.log("Update sent to main window");
+    })
 
-  mainIpc.on('close-rename-menu', () => {
-    renameWindow.close();
-  })
+    mainIpc.on('main-window-btns', (event, arg) => {
+        console.log("Names initialized");
+
+        if (btnNames.length == 0) {
+        console.log("btnNames set to default names");
+        btnNames = arg;
+        }
+
+        renameWindow.webContents.send('rename-menu-init', btnNames);
+    })
+
+    mainIpc.on('close-rename-menu', () => {
+        renameWindow.close();
+    })
+
+    mainIpc.on('restore-defaults', () => {
+        btnNames = loadDefaultConfig();
+        mainWindow.webContents.send('default-names', btnNames);
+        renameWindow.webContents.send('default-names', btnNames);
+        console.log("Default names restored");
+    })
 }
 
 // This method will be called when Electron has finished
@@ -142,36 +169,52 @@ app.on('ready', mainLoop)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+    // On OS X it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
 })
 
 app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    mainLoop();
-  }
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (mainWindow === null) {
+        mainLoop();
+    }
 })
 
 // Read button name configuration
 function loadConfig() {
-  console.log("Loading configurations");
+    console.log("Loading configurations");
 
-  try {
-    var configString = fs.readFileSync(configFile).toString();
-    var configArray = configString.split(",");
-    console.log("Load complete");
+    try {
+        var configString = fs.readFileSync(configFile).toString();
+        var configArray = configString.split(",");
+        console.log("Load complete");
 
-    return configArray;
-  } catch (err) {
-    var fileNotFoundMsg = err.message + "\nUsing default button names"
-    dialog.showMessageBox({ message: fileNotFoundMsg});
+        return configArray;
+    } catch (err) {
+        var fileNotFoundMsg = err.message + "\nUsing default button names"
+        dialog.showMessageBox({ message: fileNotFoundMsg});
 
-    return [];
-  }
-  
+        return [];
+    }
+}
+
+function loadDefaultConfig() {
+    console.log("Loading default configurations");
+
+    try {
+        var defaultConfigString = fs.readFileSync(defaultConfigFile).toString();
+        var defaultConfigArray = defaultConfigString.split(",");
+        console.log("Load complete");
+
+        return defaultConfigArray;
+    } catch (err) {
+        var fileNotFoundMsg = err.message + "\nFinding workaround..."
+        dialog.showMessageBox({ message: fileNotFoundMsg});
+
+        return [];
+    }
 }

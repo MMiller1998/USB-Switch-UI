@@ -1,39 +1,39 @@
 {
-  "name": "switchUI",
-  "version": "1.0.6",
-  "description": "A minimal Electron application to turn on and off switch ports",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "pack": "build --dir",
-    "dist": "build"
-  },
-  "repository": "https://github.com/MMiller1998/pyUI.git",
-  "keywords": [
-    "switch",
-    "UI",
-    "switchUI",
-    "whydidthistakeaweek"
-  ],
-  "author": "Jacob Chapman, Joshua Park",
-  "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "^2.0.0",
-    "electron-builder": "^20.15.1",
-    "electron-packager": "^12.1.0"
-  },
-  "dependencies": {
-    "electron-prompt": "^0.5.0",
-    "ipc": "0.0.1",
-    "menu": "^0.2.5",
-    "remote": "^0.2.6"
-  },
-  "build": {
-    "appId": "switchUI",
-    "productName": "switchUI",
-    "win": {
-      "target": "NSIS"
+    "name": "switchUI",
+    "version": "1.0.8",
+    "description": "A minimal Electron application to turn on and off switch ports",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "pack": "build --dir",
+        "dist": "build"
     },
-    "extraResources": ["./data/*config.txt"]
-  }
+    "repository": "https://github.com/MMiller1998/pyUI.git",
+    "keywords": [
+        "switch",
+        "UI",
+        "switchUI",
+        "whydidthistakeaweek"
+    ],
+    "author": "Jacob Chapman, Joshua Park",
+    "license": "CC0-1.0",
+    "devDependencies": {
+        "electron": "^2.0.0",
+        "electron-builder": "^20.15.1",
+        "electron-packager": "^12.1.0"
+    },
+    "dependencies": {
+        "electron-prompt": "^0.5.0",
+        "ipc": "0.0.1",
+        "menu": "^0.2.5",
+        "remote": "^0.2.6"
+    },
+    "build": {
+        "appId": "switchUI",
+        "productName": "switchUI",
+        "win": {
+            "target": "NSIS"
+        },
+        "extraResources": ["./data/*config.txt"]
+    }
 }

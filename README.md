@@ -50,6 +50,49 @@ Add `"pack": "build --dir"` and `"dist": "build"` to the `"scripts"` section of 
 
 Run `npm run dist` to start the build process. The executable should appear in the `dist` folder in the root directory.
 
+Example of `package.json`:
+```json
+{
+  "name": "switchUI",
+  "version": "1.0.6",
+  "description": "A minimal Electron application to turn on and off switch ports",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "repository": "https://github.com/MMiller1998/pyUI.git",
+  "keywords": [
+    "switch",
+    "UI",
+    "switchUI",
+    "whydidthistakeaweek"
+  ],
+  "author": "Jacob Chapman, Joshua Park",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^2.0.0",
+    "electron-builder": "^20.15.1",
+    "electron-packager": "^12.1.0"
+  },
+  "dependencies": {
+    "electron-prompt": "^0.5.0",
+    "ipc": "0.0.1",
+    "menu": "^0.2.5",
+    "remote": "^0.2.6"
+  },
+  "build": {
+    "appId": "switchUI",
+    "productName": "switchUI",
+    "win": {
+      "target": "NSIS"
+    },
+    "extraResources": ["./data/*config.txt"]
+  }
+}
+```
+
 ## Resources for Learning Electron
 
 - [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
