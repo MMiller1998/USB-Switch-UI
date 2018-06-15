@@ -26,7 +26,8 @@
         "electron-prompt": "^0.5.0",
         "ipc": "0.0.1",
         "menu": "^0.2.5",
-        "remote": "^0.2.6"
+        "remote": "^0.2.6",
+        "send": "^0.16.2"
     },
     "build": {
         "appId": "switchUI",
@@ -34,6 +35,8 @@
         "win": {
             "target": "NSIS"
         },
-        "extraResources": ["./data/*config.txt"]
+        "extraResources": [
+            "./data/*config.txt"
+        ]
     }
 }
