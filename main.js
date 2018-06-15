@@ -49,38 +49,43 @@ function mainLoop () {
 
     // Closes main window and shuts down app.
     mainWindow.on('close', (event) => {
-        if (appClose) {
-            mainWindow = null;
-            renameWindow.close();
+        appClose = true;
+        mainWindow = null;
+        renameWindow.close();
+        
+        // Quit confirmation dialog
+        // if (appClose) {
+        //     mainWindow = null;
+        //     renameWindow.close();
 
-        } else {
-            event.preventDefault();
+        // } else {
+        //     event.preventDefault();
             
-            dialog.showMessageBox({
-                type: 'question',
-                buttons: ['No', 'Yes'],
-                title: 'Quit?',
-                message: 'Are you sure you want to quit the application?'
-            }, (response) => {
-                // response == 0 -> No
-                // response == 1 -> Yes
-                console.log(response);
+        //     dialog.showMessageBox({
+        //         type: 'question',
+        //         buttons: ['No', 'Yes'],
+        //         title: 'Quit?',
+        //         message: 'Are you sure you want to quit the application?'
+        //     }, (response) => {
+        //         // response == 0 -> No
+        //         // response == 1 -> Yes
+        //         console.log(response);
 
-                if (response == 1) {
+        //         if (response == 1) {
 
-                    // Save configuration to config.txt
-                    fs.writeFile(configFile, btnNames, (err) => {
-                        if (err) {
-                        throw err;
-                        }
-                        console.log("Configurations saved to " + configFile);
-                    });
+        //             // Save configuration to config.txt
+        //             fs.writeFile(configFile, btnNames, (err) => {
+        //                 if (err) {
+        //                 throw err;
+        //                 }
+        //                 console.log("Configurations saved to " + configFile);
+        //             });
 
-                    appClose = true;
-                    mainWindow.close();
-                }
-            })
-        }
+        //             appClose = true;
+        //             mainWindow.close();
+        //         }
+        //     })
+        // }
     })
 
     renameWindow.on('close', (event) => {

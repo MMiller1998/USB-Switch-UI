@@ -9,24 +9,25 @@
 	cursor: pointer;
 	display: block;
 	background-color: red;
-	width: 150px;
+    width: 150px;
+    height: 48px;
 	word-wrap: break-word;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .menu-btn {
-  text-align: center;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 12px;
-  margin: 5px 0px;
-  cursor: pointer;
-  display: block;
-  width: 150px;
-  word-wrap: break-word;
+    text-align: center;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 5px 0px;
+    cursor: pointer;
+    display: block;
+    width: 150px;
+    word-wrap: break-word;
 }
 
 .col1 {

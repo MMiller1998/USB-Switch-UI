@@ -1,6 +1,6 @@
 {
     "name": "switchUI",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "A minimal Electron application to turn on and off switch ports",
     "main": "main.js",
     "scripts": {

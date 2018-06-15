@@ -85,7 +85,7 @@ function createRenameMenuBtns() {
         } else {
             document.getElementById("col2").appendChild(button);
         }
-}
+    }
 }
 
 // Gets the names of all the buttons
@@ -155,26 +155,26 @@ function updateBtns(btnNames) {
 
 // On click function for the restore default names button, used in rename-menu.html
 function restoreDefaultsClick() {
-console.log("Restore default names clicked")
+    console.log("Restore default names clicked")
 
-// Creates a confirmation box
-dialog.showMessageBox(
-    remote.getCurrentWindow(),
-    {
-        type: 'question',
-        buttons: ['No', 'Yes'],
-        title: 'Confirm',
-        message: 'Are you sure you want to restore the default button names?'
-    }, (response) => {
-        // response == 0 -> No
-        // response == 1 -> Yes
-        console.log(response);
-        
-        if (response == 1) {
-            windowIpc.send('restore-defaults')
+    // Creates a confirmation box
+    dialog.showMessageBox(
+        remote.getCurrentWindow(),
+        {
+            type: 'question',
+            buttons: ['No', 'Yes'],
+            title: 'Confirm',
+            message: 'Are you sure you want to restore the default button names?'
+        }, (response) => {
+            // response == 0 -> No
+            // response == 1 -> Yes
+            console.log(response);
+            
+            if (response == 1) {
+                windowIpc.send('restore-defaults')
+            }
         }
-    }
-)
+    )
 }
 
 // On click function for the close button, used in rename-menu.html
