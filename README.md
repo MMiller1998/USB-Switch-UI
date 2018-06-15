@@ -33,9 +33,9 @@ Note: If you're using Linux Bash for Windows, [see this guide](https://www.howto
 
 ## Packing app for Windows
 
-OPTIONAL: Create a directory `build` in the root of the project and save a `.png`, `.icns`, and an `.ico` image to use as the icon for the app. Else, the app will default to the electron icon.
+OPTIONAL: create a `build` directory in the root of your project and save icons for your app. They should be in `.png`(OSX), `.icns`(Linux), and `.ico`(Windows) format. The app will use the default electron icon if none are specified.
 
-All electron-builder to your devDependencies by running:
+Add electron-builder to your devDependencies by running:
 ```bash
 npm install electron-builder --save-dev
 ```
