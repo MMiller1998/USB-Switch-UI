@@ -18,11 +18,12 @@ You can learn more about each of these components within the [Quick Start Guide]
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
+
 ```bash
 # Clone this repository
 git clone https://github.com/MMiller1998/USB-Switch-UI.git
 # Go into the repository
-cd pyUI
+cd USB-Switch-UI
 # Install dependencies
 npm install
 # Run the app
@@ -40,7 +41,7 @@ Add electron-builder to your devDependencies by running:
 npm install electron-builder --save-dev
 ```
 
-Add `"pack": "build --dir"` and `"dist": "build"` to the `"scripts"` section of your `package.json`. Create a new `"build"`secton in `package.json` and create desired fields. Consult the [electron builder wiki](https://www.electron.build/) to see all the ways you can customize your build. For packaging the app on Windows, create
+Add `"pack": "build --dir"` and `"dist": "build"` to the `"scripts"` section of your `package.json`. Create a new `"build"`section in `package.json` and create desired fields. Consult the [electron builder wiki](https://www.electron.build/) to see all the ways you can customize your build. For packaging the app on Windows, create
 ```json
 "win": {
   "target": "NSIS",
