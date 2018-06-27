@@ -67,8 +67,7 @@ Example of `package.json`:
   "keywords": [
     "switch",
     "UI",
-    "switchUI",
-    "whydidthistakeaweek"
+    "switchUI"
   ],
   "author": "Jacob Chapman, Joshua Park",
   "license": "CC0-1.0",
